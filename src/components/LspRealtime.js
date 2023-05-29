@@ -57,7 +57,7 @@ function LspRealtime({
   useEffect(() => {
     const interval = setInterval(() => {
       fetchData();
-    }, 50000);
+    }, 150000);
     return clearInterval(interval);
   }, []);
 

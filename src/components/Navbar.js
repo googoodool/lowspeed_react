@@ -4,6 +4,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../Styles/Navbar.css";
 import { MenuItem, Menu, Button } from "@mui/material";
+import Logo from "../assets/logo.png";
 
 function Navbar() {
   const navRef = useRef();
@@ -22,7 +23,10 @@ function Navbar() {
 
   return (
     <header>
-      <h3>logo</h3>
+      <div>
+        <img src={Logo} alt="" style={{ width: "55px" }} />
+      </div>
+
       <nav ref={navRef}>
         <Link to="/" onClick={showNavbar}>
           MATCHING
@@ -75,6 +79,7 @@ function Navbar() {
           <FaTimes />
         </button>
       </nav>
+
       <button onClick={showNavbar} className="nav-btn">
         <FaBars />
       </button>

@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Container } from "@mui/system";
 import { PhotoProvider, PhotoView } from "react-photo-view";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import {
   Card,
   CardMedia,
@@ -17,8 +19,62 @@ import {
   Button,
   CardActions,
 } from "@mui/material";
+import Logo from "../assets/logo.png";
+import "../assets/Sarabun-Regular-normal";
+import "../assets/Sarabun-Light-normal";
+import "../assets/Prompt-Regular-normal";
 
 function LspViewmoreDetail({ data }) {
+  const generatePDF = () => {
+    var today = new Date();
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    var time =
+      today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+    var dateTime = date + "-" + time;
+
+    const doc = new jsPDF();
+    // Header
+    doc.addImage(Logo, "PNG", 180, 8, 17, 17); // Add your logo image
+    doc.setFont("Sarabun-Regular");
+    doc.setFontSize(10);
+    doc.setTextColor("#77787B");
+    doc.text("รายงานตรวจสอบนำ้หนักรถบรรทุก โดยระบบ WEIGHT IN MOTION", 15, 14);
+    doc.text("สำนักงานควบคุมนำ้หนักยานพาหนะ กรมทางหลวง", 15, 19); // Add your header text
+    doc.text("สถานีตรวจสอบน้ำหนัก สิงห์บุรี", 15, 24);
+    doc.setLineWidth(0.7);
+    doc.line(15, 28, 197, 28);
+    doc.setLineWidth(0.3);
+    doc.line(15, 29, 197, 29);
+
+    doc.setFont("Prompt-Regular");
+    doc.setFontSize(11);
+    doc.setTextColor("#00000");
+    doc.text("ภาพถ่ายรถบรรทุก", 105, 42, "center");
+    doc.setFontSize(10);
+    doc.text("Overview", 50, 53);
+    doc.text("LPR", 145, 53);
+
+    doc.addImage(lprImg2, "PNG", 15, 57, 85, 55);
+    doc.addImage(overImg, 110, 57, 85, 55);
+    console.log("Over " + overImg);
+    console.log("--------------------");
+    console.log("LPR " + lprImg2);
+
+    // autoTable(doc, {
+    //   head: [["Name", "Email", "Country"]],
+    //   body: [
+    //     ["David", "david@example.com", "Sweden"],
+    //     ["Castille", "castille@example.com", "Spain"],
+    //   ],
+    // });
+    doc.save("Report " + dateTime + ".pdf");
+  };
+
   const theme = createTheme({
     typography: {},
   });
@@ -61,6 +117,8 @@ function LspViewmoreDetail({ data }) {
   if (data.sum_w7 === "0") {
     data.sum_w7 = "-";
   }
+  let overImg = "data:image/png;base64," + data.img_overview;
+  let lprImg2 = "data:image/jpeg;base64," + data.img_lpr;
 
   return (
     <Section>
@@ -75,6 +133,18 @@ function LspViewmoreDetail({ data }) {
               >
                 Back to page
               </Button>
+              <Button
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  marginLeft: "10px",
+                }}
+                variant="contained"
+                color="success"
+                onClick={generatePDF}
+              >
+                Export PDF
+              </Button>
             </CardActions>
 
             <div>
@@ -82,13 +152,11 @@ function LspViewmoreDetail({ data }) {
                 <Grid container>
                   <Grid item xs={5}>
                     <PhotoProvider>
-                      <PhotoView
-                        src={`data:image/png;base64,${data.img_overview}`}
-                      >
+                      <PhotoView src={overImg}>
                         <CardMedia
                           component="img"
                           height="300"
-                          image={`data:image/png;base64,${data.img_overview}`}
+                          image={overImg}
                           alt="My Image"
                         />
                       </PhotoView>
@@ -193,16 +261,15 @@ function LspViewmoreDetail({ data }) {
                 <Grid container>
                   <Grid item xs={5}>
                     <PhotoProvider>
-                      <PhotoView src={`data:image/png;base64,${data.img_lpr}`}>
+                      <PhotoView src={lprImg2}>
                         <CardMedia
                           component="img"
                           height="300"
-                          image={`data:image/png;base64,${data.img_lpr}`}
+                          image={lprImg2}
                           alt="My Image"
                         />
                       </PhotoView>
                     </PhotoProvider>
-                    \
                   </Grid>
                   <Grid item xs={7} container style={{ padding: "10px" }}>
                     <Grid item xs={12}>

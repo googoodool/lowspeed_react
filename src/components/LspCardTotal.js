@@ -38,7 +38,7 @@ function LspCardTotal() {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchData();
-    }, 5000);
+    }, 150000);
     return () => clearInterval(interval);
   }, []);
 

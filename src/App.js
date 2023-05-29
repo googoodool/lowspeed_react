@@ -15,13 +15,14 @@ import ReportHSP from "./pages/ReportHSP";
 import ReportLSP from "./pages/ReportLSP";
 import Report01 from "./reports/Report01";
 import "react-photo-view/dist/react-photo-view.css";
+import Footers from "./components/Footers";
 
 const Layout = () => {
   return (
     <>
       <Navbar />
       <Outlet />
-      {/* <Footer /> */}
+      <Footers />
     </>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import LspViewmoreDetail from "./LspViewmoreDetail";
 import { useLocation } from "react-router-dom";
 import Loading from "../components/Loading";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -29,7 +29,10 @@ function LspViewmore() {
     };
     updateData();
   };
-  fetchData();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   if (loading) {
     return (

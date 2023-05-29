@@ -198,6 +198,7 @@ function Report01() {
                                   className="testImg"
                                   src={`data:image/png;base64,${row.ImageOverview}`}
                                   style={{ width: "100px" }}
+                                  alt=""
                                 />
                               </PhotoView>
                             </PhotoProvider>
