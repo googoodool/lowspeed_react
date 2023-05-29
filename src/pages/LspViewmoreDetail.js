@@ -59,19 +59,109 @@ function LspViewmoreDetail({ data }) {
     doc.text("Overview", 50, 53);
     doc.text("LPR", 145, 53);
 
-    doc.addImage(lprImg2, "PNG", 15, 57, 85, 55);
-    doc.addImage(overImg, 110, 57, 85, 55);
-    console.log("Over " + overImg);
-    console.log("--------------------");
-    console.log("LPR " + lprImg2);
+    doc.addImage(overImg, "PNG", 15, 57, 85, 55);
+    doc.addImage(lprImg, "PNG", 110, 57, 85, 55);
 
-    // autoTable(doc, {
-    //   head: [["Name", "Email", "Country"]],
-    //   body: [
-    //     ["David", "david@example.com", "Sweden"],
-    //     ["Castille", "castille@example.com", "Spain"],
-    //   ],
-    // });
+    doc.text("ข้อมูลรถบรรทุกจากระบบ WIM", 83, 130);
+
+    autoTable(doc, {
+      startY: 140,
+      didParseCell: function (data) {
+        var cell = data.cell;
+        cell.styles.font = "Sarabun-Regular";
+      },
+      head: [["รายการ", "ข้อมูลจากระบบ WIM", "รายการ", "ข้อมูลจากระบบ WIM"]],
+      body: [
+        ["วันที่", data_date, "เวลา", data_time],
+        [
+          "ช่องจราจร",
+          "เลน " + data.lane,
+          "ความเร็ว",
+          Math.round(data.speed * 0.1) + " Km/H",
+        ],
+        [
+          "ประเภทรถ",
+          data.legal_class + " - " + data.class_detail,
+          "ป้ายทะเบียน",
+          data.lpr_number + " " + data.province,
+        ],
+        ["จํานวนเพลา", data.sum_axle + " เพลา", "สถานะ", statusText],
+        ["น้ําหนักพิกัดกฎหมาย", data.max_weight + " Kg", "ESAL Flexible", 10],
+        [
+          "น้ําหนักรถบรรทุก",
+          data.gross + " Kg",
+          "ESAL Regid10 / Regid11",
+          10 + " / " + 10,
+        ],
+      ],
+    });
+
+    doc.text("ตารางแสดงข้อมูลเพลารถบรรทุก", 83, 208);
+
+    autoTable(doc, {
+      startY: 215,
+
+      didParseCell: function (data) {
+        var cell = data.cell;
+        cell.styles.font = "Sarabun-Regular";
+      },
+      columnStyles: {
+        0: { columnWidth: 45 },
+        1: { columnWidth: 20 },
+        2: { columnWidth: 20 },
+        3: { columnWidth: 20 },
+        4: { columnWidth: 20 },
+        5: { columnWidth: 19 },
+        6: { columnWidth: 19 },
+        7: { columnWidth: 19 },
+      },
+      head: [["เพลา", "1", "2", "3", "4", "5", "6", "7"]],
+      body: [
+        [
+          "น้ําหนักเพลา (Kg)",
+          data.sum_w1,
+          data.sum_w2,
+          data.sum_w3,
+          data.sum_w4,
+          data.sum_w5,
+          data.sum_w6,
+          data.sum_w7,
+        ],
+      ],
+    });
+
+    autoTable(doc, {
+      startY: 240,
+      columnStyles: {
+        0: { columnWidth: 45 },
+        1: { columnWidth: 20 },
+        2: { columnWidth: 20 },
+        3: { columnWidth: 20 },
+        4: { columnWidth: 20 },
+        5: { columnWidth: 19 },
+        6: { columnWidth: 19 },
+        7: { columnWidth: 19 },
+      },
+      didParseCell: function (data) {
+        var cell = data.cell;
+        cell.styles.font = "Sarabun-Regular";
+      },
+
+      head: [["เพลา", "1", "2", "3", "4", "5", "6", "7"]],
+      body: [
+        [
+          "ระยะห่างระหว่างเพลา (cm)",
+          data.space_w1,
+          data.space_w2,
+          data.space_w3,
+          data.space_w4,
+          data.space_w5,
+          data.space_w6,
+          "-",
+        ],
+      ],
+    });
+
     doc.save("Report " + dateTime + ".pdf");
   };
 
@@ -118,7 +208,12 @@ function LspViewmoreDetail({ data }) {
     data.sum_w7 = "-";
   }
   let overImg = "data:image/png;base64," + data.img_overview;
-  let lprImg2 = "data:image/jpeg;base64," + data.img_lpr;
+  let lprImg = "data:image/png;base64," + data.img_lpr;
+
+  let statusText = "ไม่เกินกฎหมาย";
+  if (data.gross > data.max_weight) {
+    statusText = "เกินพิกัดกฎหมาย";
+  }
 
   return (
     <Section>
@@ -261,11 +356,11 @@ function LspViewmoreDetail({ data }) {
                 <Grid container>
                   <Grid item xs={5}>
                     <PhotoProvider>
-                      <PhotoView src={lprImg2}>
+                      <PhotoView src={lprImg}>
                         <CardMedia
                           component="img"
                           height="300"
-                          image={lprImg2}
+                          image={lprImg}
                           alt="My Image"
                         />
                       </PhotoView>
