@@ -18,6 +18,8 @@ import {
   CardActions,
 } from "@mui/material";
 
+import PDFdetail from "../reports/PDFdetail";
+
 function HispViewmoreDetail({ data }) {
   const theme = createTheme({
     typography: {},
@@ -30,20 +32,51 @@ function HispViewmoreDetail({ data }) {
   const data_date = splited[1] + "/" + splited[0] + "/" + splited[2];
   const data_time = data.time.slice(0, 8);
 
-  if (data.space_w2 === "0") {
-    data.space_w2 = "-";
+  let space_w1 = (data.space_w1 * 0.1).toFixed(1);
+  let space_w2 = 0;
+  let space_w3 = 0;
+  let space_w4 = 0;
+  let space_w5 = 0;
+  let space_w6 = 0;
+  if (data.space_w2 !== "-") {
+    space_w2 = (data.space_w2 * 0.1).toFixed(1);
+    if (space_w2 < 1) {
+      space_w2 = "-";
+    }
+  } else {
+    space_w2 = "-";
   }
-  if (data.space_w3 === "0") {
-    data.space_w3 = "-";
+  if (data.space_w3 !== "-") {
+    space_w3 = (data.space_w3 * 0.1).toFixed(1);
+    if (space_w3 < 1) {
+      space_w3 = "-";
+    }
+  } else {
+    space_w3 = "-";
   }
-  if (data.space_w4 === "0") {
-    data.space_w4 = "-";
+  if (data.space_w4 !== "-") {
+    space_w4 = (data.space_w4 * 0.1).toFixed(1);
+    if (space_w4 < 1) {
+      space_w4 = "-";
+    }
+  } else {
+    space_w4 = "-";
   }
-  if (data.space_w5 === "0") {
-    data.space_w5 = "-";
+  if (data.space_w5 !== "-") {
+    space_w5 = (data.space_w5 * 0.1).toFixed(1);
+    if (space_w5 < 1) {
+      space_w5 = "-";
+    }
+  } else {
+    space_w5 = "-";
   }
-  if (data.space_w6 === "0") {
-    data.space_w6 = "-";
+  if (data.space_w6 !== "-") {
+    space_w6 = (data.space_w6 * 0.1).toFixed(1);
+    if (space_w6 < 1) {
+      space_w6 = "-";
+    }
+  } else {
+    space_w6 = "-";
   }
 
   if (data.sum_w3 === "0") {
@@ -62,6 +95,14 @@ function HispViewmoreDetail({ data }) {
     data.sum_w7 = "-";
   }
 
+  // let overImg = "data:image/png;base64," + data.img_overview;
+  // let lprImg = "data:image/png;base64," + data.img_lpr;
+
+  // let statusText = "ไม่เกินกฎหมาย";
+  // if (data.gross > data.max_weight) {
+  //   statusText = "เกินพิกัดกฎหมาย";
+  // }
+
   return (
     <Section>
       <div className="detail">
@@ -69,12 +110,23 @@ function HispViewmoreDetail({ data }) {
           <Container maxWidth="xl">
             <CardActions>
               <Button
-                style={{ marginTop: "10px", marginBottom: "10px" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  marginRight: "10px",
+                }}
                 variant="contained"
                 href="/hispeed"
               >
                 Back to page
               </Button>
+
+              <PDFdetail
+                buttonText="Export PDF"
+                variant="contained"
+                color="success"
+                data={data}
+              />
             </CardActions>
 
             <div>
@@ -121,13 +173,16 @@ function HispViewmoreDetail({ data }) {
                               <TableCell sx={{ backgroundColor: Color }}>
                                 ESAL Flexible
                               </TableCell>
-                              <TableCell>12.3</TableCell>
+                              <TableCell>{data.flex.toFixed(2)}</TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell sx={{ backgroundColor: Color }}>
                                 R10/R11
                               </TableCell>
-                              <TableCell>12.3 / 234</TableCell>
+                              <TableCell>
+                                {data.rigid10.toFixed(2)} /{" "}
+                                {data.rigid11.toFixed(2)}
+                              </TableCell>
                             </TableRow>
                           </TableBody>
                         </Table>
@@ -214,15 +269,15 @@ function HispViewmoreDetail({ data }) {
                           <TableBody>
                             <TableRow>
                               <TableCell sx={{ backgroundColor: Color }}>
-                                ระยะห่างเพลา(cm.)
+                                ระยะห่างเพลา(m.)
                               </TableCell>
 
-                              <TableCell>{data.space_w1}</TableCell>
-                              <TableCell>{data.space_w2}</TableCell>
-                              <TableCell>{data.space_w3}</TableCell>
-                              <TableCell>{data.space_w4}</TableCell>
-                              <TableCell>{data.space_w5}</TableCell>
-                              <TableCell>{data.space_w6}</TableCell>
+                              <TableCell>{space_w1}</TableCell>
+                              <TableCell>{space_w2}</TableCell>
+                              <TableCell>{space_w3}</TableCell>
+                              <TableCell>{space_w4}</TableCell>
+                              <TableCell>{space_w5}</TableCell>
+                              <TableCell>{space_w6}</TableCell>
                               <TableCell>-</TableCell>
                             </TableRow>
                             <TableRow>

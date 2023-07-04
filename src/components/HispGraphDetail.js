@@ -28,21 +28,26 @@ function HispGraphDetail({ data }) {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="legal_class" tick={{ fontSize: 17 }} />
+            <XAxis
+              dataKey="legal_class"
+              tick={{ fontSize: 11, margin: 3 }}
+              tickFormatter={(legal_class) => `ประเภท${legal_class}`}
+              angle={340}
+            />
             <YAxis />
             <Tooltip />
             <Legend />
             <Bar
               dataKey="TOTAL"
-              fill="#6e78ff"
+              fill="#1F8A70"
               name="จำนวนรถทั้งหมด"
               stackId="a"
             />
             <Bar
               dataKey="OVER_Count"
-              stackId="a"
-              fill="#d71b3b"
-              name="จำนวนน้ำหนักเกินกฎหมาย"
+              stackId="b"
+              fill="#FC7300"
+              name="จำนวนรถน้ำหนักอาจเกินกฎหมาย"
             />
           </BarChart>
         </ResponsiveContainer>

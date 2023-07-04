@@ -46,7 +46,74 @@ function ReportHSP() {
         });
         break;
       case "2":
-        // setSubmitButton("2");
+        navigate("/Report02_H", {
+          state: {
+            startDateValue: startDateValue,
+            endDateValue: endDateValue,
+            startTimeValue: startTimeValue,
+            endTimeValue: endTimeValue,
+          },
+        });
+        break;
+      case "3":
+        navigate("/Report03_H", {
+          state: {
+            startDateValue: startDateValue,
+            endDateValue: endDateValue,
+            startTimeValue: startTimeValue,
+            endTimeValue: endTimeValue,
+          },
+        });
+        break;
+      case "4":
+        navigate("/Report04_H", {
+          state: {
+            startDateValue: startDateValue,
+            endDateValue: endDateValue,
+            startTimeValue: startTimeValue,
+            endTimeValue: endTimeValue,
+          },
+        });
+        break;
+      case "5":
+        navigate("/Report05_H", {
+          state: {
+            startDateValue: startDateValue,
+            endDateValue: endDateValue,
+            startTimeValue: startTimeValue,
+            endTimeValue: endTimeValue,
+          },
+        });
+        break;
+      case "6":
+        navigate("/Report06_H", {
+          state: {
+            startDateValue: startDateValue,
+            endDateValue: endDateValue,
+            startTimeValue: startTimeValue,
+            endTimeValue: endTimeValue,
+          },
+        });
+        break;
+      case "7":
+        navigate("/Report07_H", {
+          state: {
+            startDateValue: startDateValue,
+            endDateValue: endDateValue,
+            startTimeValue: startTimeValue,
+            endTimeValue: endTimeValue,
+          },
+        });
+        break;
+      case "8":
+        navigate("/Report08_H", {
+          state: {
+            startDateValue: startDateValue,
+            endDateValue: endDateValue,
+            startTimeValue: startTimeValue,
+            endTimeValue: endTimeValue,
+          },
+        });
         break;
       default:
       // setSubmitButton(null);
@@ -55,10 +122,7 @@ function ReportHSP() {
 
   return (
     <Section>
-      <HeaderBar
-        wimType="High Speed Report"
-        stationName="สถานีตรวจสอบน้ำหนัก สิงห์บุรี"
-      />
+      <HeaderBar wimType="High Speed Report" />
       <Container>
         <div className="container">
           <form onSubmit={generateReport}>

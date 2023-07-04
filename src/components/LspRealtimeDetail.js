@@ -173,7 +173,7 @@ function LspRealtimeDetail({
                         size="small"
                         onClick={viewMore}
                         variant="contained"
-                        color="secondary"
+                        color="info"
                         style={{ marginTop: "-7px", marginLeft: "55px" }}
                       >
                         Matching

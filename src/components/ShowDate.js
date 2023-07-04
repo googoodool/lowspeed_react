@@ -16,7 +16,7 @@ function ShowDate() {
   return (
     <Section>
       <p>
-        ข้อมูลประจำวันที่ {date.toLocaleDateString()} -{" "}
+        ข้อมูลประจำวันที่ {date.toLocaleDateString("en-GB")} -{" "}
         {date.toLocaleTimeString("th-GB")}
       </p>
     </Section>

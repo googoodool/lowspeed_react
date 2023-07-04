@@ -21,11 +21,12 @@ import { FiChevronsLeft } from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
 import Report01Modal from "./Report01Modal";
 import Loading from "../components/Loading";
-
+import PDFdetail from "./PDFdetail";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 
 const columns = [
-  { id: "overview", label: "Image", minWidth: 80, maxWidth: 80 },
+  { id: "overview", label: "Overview", minWidth: 80, maxWidth: 80 },
+  { id: "lpr", label: "LPR", minWidth: 80, maxWidth: 80 },
   { id: "view", label: "View", minWidth: 80, maxWidth: 80 },
   { id: "status", label: "Status", minWidth: 80, maxWidth: 80 },
 
@@ -41,7 +42,7 @@ const columns = [
   { id: "type", label: "ประเภท", minWidth: 235, maxWidth: 235 },
 ];
 
-function Report01() {
+function Report01({ buttonText }) {
   const navigate = useNavigate();
   const receiveData = useLocation();
 
@@ -64,12 +65,6 @@ function Report01() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  // const customConfig = {
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // };
 
   const handleShowModal = (id, row) => {
     setShowModal(true);
@@ -113,10 +108,7 @@ function Report01() {
 
   return (
     <Section>
-      <HeaderBar
-        wimType="High Speed Report"
-        stationName="สถานีตรวจสอบน้ำหนัก สิงห์บุรี"
-      />
+      <HeaderBar wimType="High Speed Report" />
       <div className="mainReport">
         <Button
           variant="contained"
@@ -171,12 +163,12 @@ function Report01() {
                   {getData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      let convertDate = row.Date.substring(0, 10);
-                      let convertTime = row.Time.substring(11, 19);
+                      let convertDate = row.date_update.substring(0, 10);
+                      let convertTime = row.time_update.substring(11, 19);
                       let statusWeight;
-                      if (row.WeightStatus === "PASS") {
+                      if (row.status_weight === "PASS") {
                         statusWeight = "success";
-                      } else if (row.WeightStatus === "OVER") {
+                      } else if (row.status_weight === "OVER") {
                         statusWeight = "error";
                       } else {
                         statusWeight = "secondary";
@@ -184,7 +176,7 @@ function Report01() {
 
                       return (
                         <TableRow
-                          key={row.WimHeader_ID}
+                          key={row.id}
                           hover
                           role="checkbox"
                           tabIndex={-1}
@@ -192,12 +184,26 @@ function Report01() {
                           <TableCell>
                             <PhotoProvider>
                               <PhotoView
-                                src={`data:image/png;base64,${row.ImageOverview}`}
+                                src={`data:image/png;base64,${row.img_overview}`}
                               >
                                 <img
                                   className="testImg"
-                                  src={`data:image/png;base64,${row.ImageOverview}`}
-                                  style={{ width: "100px" }}
+                                  src={`data:image/png;base64,${row.img_overview}`}
+                                  style={{ width: "100px", height: "60px" }}
+                                  alt=""
+                                />
+                              </PhotoView>
+                            </PhotoProvider>
+                          </TableCell>
+                          <TableCell>
+                            <PhotoProvider>
+                              <PhotoView
+                                src={`data:image/png;base64,${row.img_lpr}`}
+                              >
+                                <img
+                                  className="testImg"
+                                  src={`data:image/png;base64,${row.img_lpr}`}
+                                  style={{ width: "100px", height: "60px" }}
                                   alt=""
                                 />
                               </PhotoView>
@@ -213,36 +219,37 @@ function Report01() {
                                 variant="outlined"
                                 size="small"
                                 color="secondary"
-                                onClick={() =>
-                                  handleShowModal(row.WimHeader_ID, row)
-                                }
+                                onClick={() => handleShowModal(row.id, row)}
                               >
                                 View
                               </Button>
-                              <Button>Print</Button>
+                              <PDFdetail buttonText="Print" data={row} />
                             </ButtonGroup>
                           </TableCell>
                           <TableCell>
                             <Chip
-                              label={row.WeightStatus}
+                              label={row.status_weight}
                               color={statusWeight}
                               variant="contained"
                               size="small"
                               align="center"
                             />
                           </TableCell>
+
                           <TableCell>{convertDate}</TableCell>
                           <TableCell>{convertTime}</TableCell>
-                          <TableCell>{row.LicensePlate_Number}</TableCell>
-                          <TableCell>{row.LicensePlate_Province}</TableCell>
-                          <TableCell>{row.MaxWeight}</TableCell>
-                          <TableCell>{row.Gross}</TableCell>
-                          <TableCell>{row.Lane}</TableCell>
+                          <TableCell>{row.lpr_number}</TableCell>
+                          <TableCell>{row.province}</TableCell>
+                          <TableCell>{row.max_weight}</TableCell>
+                          <TableCell>{row.gross}</TableCell>
+                          <TableCell>{row.lane}</TableCell>
                           <TableCell>
-                            {Math.round(row.Speed * 0.1)} km/h
+                            {Math.round(row.speed * 0.1)} km/h
                           </TableCell>
-                          <TableCell>{row.Sum_Axle} เพลา</TableCell>
-                          <TableCell>{row.ClassDetail}</TableCell>
+                          <TableCell>{row.sum_axle} เพลา</TableCell>
+                          <TableCell>
+                            {row.legal_class} - {row.class_detail}
+                          </TableCell>
                         </TableRow>
                       );
                     })}

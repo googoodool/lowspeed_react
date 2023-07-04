@@ -10,10 +10,7 @@ import HispRealtime from "../components/HispRealtime";
 function Hispeed() {
   return (
     <Section>
-      <HeaderBar
-        wimType="WIM Hi-Speed"
-        stationName="สถานีตรวจสอบน้ำหนัก สิงห์บุรี"
-      />
+      <HeaderBar wimType="WIM Hi-Speed" />
       <ShowDate />
 
       <Grid container spacing={2}>
@@ -26,6 +23,8 @@ function Hispeed() {
       </Grid>
 
       <HispRealtime />
+      <br />
+      <br />
     </Section>
   );
 }

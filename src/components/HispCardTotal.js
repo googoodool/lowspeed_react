@@ -37,7 +37,7 @@ function HispCardTotal() {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchData();
-    }, 50000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 

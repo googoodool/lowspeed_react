@@ -34,16 +34,15 @@ function LspGraphDetail({ data }) {
             <Legend />
             <Bar
               dataKey="TOTAL"
-              fill="#1989A7"
+              fill="#1F8A70"
               name="จำนวนรถทั้งหมด"
-              type="monotone"
               stackId="a"
             />
             <Bar
               dataKey="OVER_Count"
-              stackId="a"
-              fill="#db2b39"
-              name="จำนวนน้ำหนักเกินกฎหมาย"
+              stackId="b"
+              fill="#FC7300"
+              name="จำนวนรถน้ำหนักอาจเกินกฎหมาย"
             />
           </BarChart>
         </ResponsiveContainer>

@@ -56,7 +56,10 @@ function HispRealtimeDetail({
               key={id}
             >
               <CardHeader
-                titleTypographyProps={{ variant: "subtitle1" }}
+                titleTypographyProps={{
+                  variant: "subtitle1",
+                  // color: color_weight,
+                }}
                 title={`${lpr} ${province}`}
                 action={
                   <Button size="small" variant="contained" color={status_color}>

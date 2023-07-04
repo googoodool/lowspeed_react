@@ -57,8 +57,8 @@ function HispRealtime({
   useEffect(() => {
     const interval = setInterval(() => {
       fetchData();
-    }, 50000);
-    return clearInterval(interval);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) {
@@ -80,6 +80,7 @@ function HispRealtime({
           style={{ minHeight: "80vh" }}
         >
           {getData.map((res) => {
+            let status_show = "";
             if (!res.lpr_number) {
               res.lpr = "-";
             }
@@ -88,12 +89,15 @@ function HispRealtime({
             }
             if (res.status_weight === "PASS") {
               status_color = "success";
+              status_show = "PASS";
             }
             if (res.status_weight === "OVER") {
               status_color = "error";
+              status_show = "Warning";
             }
             if (res.status_weight === "ERROR") {
               status_color = "secondary";
+              status_show = "Error";
             }
 
             const getDate = res.date;
@@ -104,7 +108,7 @@ function HispRealtime({
             gross = parseInt(res.gross);
             data_time = res.time.slice(0, 8);
             speed = Math.round(res.speed * 0.1);
-            color_weight = "green";
+            color_weight = "blue";
             ex_gross = "";
             id = res.sequence_no;
             overview = res.img_overview;
@@ -121,7 +125,7 @@ function HispRealtime({
                 key={id}
                 lpr={res.lpr_number}
                 province={res.province}
-                status_weight={res.status_weight}
+                status_weight={status_show}
                 status_color={status_color}
                 image={`data:image/png;base64,${overview}`}
                 data_date={data_date}

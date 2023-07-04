@@ -11,10 +11,7 @@ import GraphLsp from "../components/GraphLsp";
 function LowSpeed() {
   return (
     <Section>
-      <HeaderBar
-        wimType="WIM Low-Speed"
-        stationName="สถานีตรวจสอบน้ำหนัก สิงห์บุรี"
-      />
+      <HeaderBar wimType="WIM Low-Speed" />
       <ShowDate />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6} lg={6}>

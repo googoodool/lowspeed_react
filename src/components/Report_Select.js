@@ -14,9 +14,26 @@ function Report_Select({ selectedReport, onChanges }) {
           onChange={onChanges}
           required
         >
-          <MenuItem value={"1"}>รายงานข้อมูลรถย้อนหลัง แบบรายคัน</MenuItem>
-          <MenuItem value={"2"}>Report02</MenuItem>
-          <MenuItem value={"3"}>Report03</MenuItem>
+          <MenuItem value={"1"}>01-รายงานข้อมูลรถย้อนหลัง แบบรายคัน</MenuItem>
+          <MenuItem value={"2"}>02-รายงานรถแยกตามประเภท และผลคัดกรอง</MenuItem>
+          <MenuItem value={"3"}>
+            03-รายงาน ปริมาณรถแยกตามประเภท แบบรายวัน
+          </MenuItem>
+          <MenuItem value={"4"}>
+            04-รายงาน ปริมาณรถแยกตามประเภท แบบรายเดือน
+          </MenuItem>
+          <MenuItem value={"5"}>
+            05-รายงาน ปริมาณรถแยกตามประเภท แบบรายปี
+          </MenuItem>
+          <MenuItem value={"6"}>
+            06-รายงาน ค่าเฉลี่ยน้ำหนักรถแยกตามประเภท แบบรายวัน
+          </MenuItem>
+          <MenuItem value={"7"}>
+            07-รายงาน ค่าเฉลี่ยน้ำหนักรถแยกตามประเภท แบบรายเดือน
+          </MenuItem>
+          <MenuItem value={"8"}>
+            08-รายงาน ค่าเฉลี่ยน้ำหนักรถแยกตามประเภท แบบรายปี
+          </MenuItem>
         </Select>
       </FormControl>
     </Section>

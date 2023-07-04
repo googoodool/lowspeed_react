@@ -16,6 +16,13 @@ import ReportLSP from "./pages/ReportLSP";
 import Report01 from "./reports/Report01";
 import "react-photo-view/dist/react-photo-view.css";
 import Footers from "./components/Footers";
+import Report02_H from "./reports/Report02_H";
+import Report03_H from "./reports/Report03_H";
+import Report04_H from "./reports/Report04_H";
+import Report05_H from "./reports/Report05_H";
+import Report06_H from "./reports/Report06_H";
+import Report07_H from "./reports/Report07_H";
+import Report08_H from "./reports/Report08_H";
 
 const Layout = () => {
   return (
@@ -68,6 +75,34 @@ const router = createBrowserRouter([
       {
         path: "/report01",
         element: <Report01 />,
+      },
+      {
+        path: "/report02_H",
+        element: <Report02_H />,
+      },
+      {
+        path: "/report03_H",
+        element: <Report03_H />,
+      },
+      {
+        path: "/report04_H",
+        element: <Report04_H />,
+      },
+      {
+        path: "/report05_H",
+        element: <Report05_H />,
+      },
+      {
+        path: "/report06_H",
+        element: <Report06_H />,
+      },
+      {
+        path: "/report07_H",
+        element: <Report07_H />,
+      },
+      {
+        path: "/report08_H",
+        element: <Report08_H />,
       },
     ],
   },

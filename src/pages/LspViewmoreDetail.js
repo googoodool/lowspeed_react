@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Container } from "@mui/system";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+// import jsPDF from "jspdf";
+// import autoTable from "jspdf-autotable";
 import {
   Card,
   CardMedia,
@@ -19,151 +19,152 @@ import {
   Button,
   CardActions,
 } from "@mui/material";
-import Logo from "../assets/logo.png";
-import "../assets/Sarabun-Regular-normal";
-import "../assets/Sarabun-Light-normal";
-import "../assets/Prompt-Regular-normal";
+import PDFdetail from "../reports/PDFdetail";
+// import Logo from "../assets/logo.png";
+// import "../assets/Sarabun-Regular-normal";
+// import "../assets/Sarabun-Light-normal";
+// import "../assets/Prompt-Regular-normal";
 
 function LspViewmoreDetail({ data }) {
-  const generatePDF = () => {
-    var today = new Date();
-    var date =
-      today.getFullYear() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getDate();
-    var time =
-      today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
-    var dateTime = date + "-" + time;
+  // const generatePDF = () => {
+  //   var today = new Date();
+  //   var date =
+  //     today.getFullYear() +
+  //     "-" +
+  //     (today.getMonth() + 1) +
+  //     "-" +
+  //     today.getDate();
+  //   var time =
+  //     today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+  //   var dateTime = date + "-" + time;
 
-    const doc = new jsPDF();
-    // Header
-    doc.addImage(Logo, "PNG", 180, 8, 17, 17); // Add your logo image
-    doc.setFont("Sarabun-Regular");
-    doc.setFontSize(10);
-    doc.setTextColor("#77787B");
-    doc.text("รายงานตรวจสอบนำ้หนักรถบรรทุก โดยระบบ WEIGHT IN MOTION", 15, 14);
-    doc.text("สำนักงานควบคุมนำ้หนักยานพาหนะ กรมทางหลวง", 15, 19); // Add your header text
-    doc.text("สถานีตรวจสอบน้ำหนัก สิงห์บุรี", 15, 24);
-    doc.setLineWidth(0.7);
-    doc.line(15, 28, 197, 28);
-    doc.setLineWidth(0.3);
-    doc.line(15, 29, 197, 29);
+  //   const doc = new jsPDF();
+  //   // Header
+  //   doc.addImage(Logo, "PNG", 180, 8, 17, 17); // Add your logo image
+  //   doc.setFont("Sarabun-Regular");
+  //   doc.setFontSize(10);
+  //   doc.setTextColor("#77787B");
+  //   doc.text("รายงานตรวจสอบนำ้หนักรถบรรทุก โดยระบบ WEIGHT IN MOTION", 15, 14);
+  //   doc.text("สำนักงานควบคุมนำ้หนักยานพาหนะ กรมทางหลวง", 15, 19); // Add your header text
+  //   doc.text("สถานีตรวจสอบน้ำหนัก สิงห์บุรี", 15, 24);
+  //   doc.setLineWidth(0.7);
+  //   doc.line(15, 28, 197, 28);
+  //   doc.setLineWidth(0.3);
+  //   doc.line(15, 29, 197, 29);
 
-    doc.setFont("Prompt-Regular");
-    doc.setFontSize(11);
-    doc.setTextColor("#00000");
-    doc.text("ภาพถ่ายรถบรรทุก", 105, 42, "center");
-    doc.setFontSize(10);
-    doc.text("Overview", 50, 53);
-    doc.text("LPR", 145, 53);
+  //   doc.setFont("Prompt-Regular");
+  //   doc.setFontSize(11);
+  //   doc.setTextColor("#00000");
+  //   doc.text("ภาพถ่ายรถบรรทุก", 105, 42, "center");
+  //   doc.setFontSize(10);
+  //   doc.text("Overview", 50, 53);
+  //   doc.text("LPR", 145, 53);
 
-    doc.addImage(overImg, "PNG", 15, 57, 85, 55);
-    doc.addImage(lprImg, "PNG", 110, 57, 85, 55);
+  //   doc.addImage(overImg, "PNG", 15, 57, 85, 55);
+  //   doc.addImage(lprImg, "PNG", 110, 57, 85, 55);
 
-    doc.text("ข้อมูลรถบรรทุกจากระบบ WIM", 83, 130);
+  //   doc.text("ข้อมูลรถบรรทุกจากระบบ WIM", 83, 130);
 
-    autoTable(doc, {
-      startY: 140,
-      didParseCell: function (data) {
-        var cell = data.cell;
-        cell.styles.font = "Sarabun-Regular";
-      },
-      head: [["รายการ", "ข้อมูลจากระบบ WIM", "รายการ", "ข้อมูลจากระบบ WIM"]],
-      body: [
-        ["วันที่", data_date, "เวลา", data_time],
-        [
-          "ช่องจราจร",
-          "เลน " + data.lane,
-          "ความเร็ว",
-          Math.round(data.speed * 0.1) + " Km/H",
-        ],
-        [
-          "ประเภทรถ",
-          data.legal_class + " - " + data.class_detail,
-          "ป้ายทะเบียน",
-          data.lpr_number + " " + data.province,
-        ],
-        ["จํานวนเพลา", data.sum_axle + " เพลา", "สถานะ", statusText],
-        ["น้ําหนักพิกัดกฎหมาย", data.max_weight + " Kg", "ESAL Flexible", 10],
-        [
-          "น้ําหนักรถบรรทุก",
-          data.gross + " Kg",
-          "ESAL Regid10 / Regid11",
-          10 + " / " + 10,
-        ],
-      ],
-    });
+  //   autoTable(doc, {
+  //     startY: 140,
+  //     didParseCell: function (data) {
+  //       var cell = data.cell;
+  //       cell.styles.font = "Sarabun-Regular";
+  //     },
+  //     head: [["รายการ", "ข้อมูลจากระบบ WIM", "รายการ", "ข้อมูลจากระบบ WIM"]],
+  //     body: [
+  //       ["วันที่", data_date, "เวลา", data_time],
+  //       [
+  //         "ช่องจราจร",
+  //         "เลน " + data.lane,
+  //         "ความเร็ว",
+  //         Math.round(data.speed * 0.1) + " Km/H",
+  //       ],
+  //       [
+  //         "ประเภทรถ",
+  //         data.legal_class + " - " + data.class_detail,
+  //         "ป้ายทะเบียน",
+  //         data.lpr_number + " " + data.province,
+  //       ],
+  //       ["จํานวนเพลา", data.sum_axle + " เพลา", "สถานะ", statusText],
+  //       ["น้ําหนักพิกัดกฎหมาย", data.max_weight + " Kg", "ESAL Flexible", 10],
+  //       [
+  //         "น้ําหนักรถบรรทุก",
+  //         data.gross + " Kg",
+  //         "ESAL Regid10 / Regid11",
+  //         10 + " / " + 10,
+  //       ],
+  //     ],
+  //   });
 
-    doc.text("ตารางแสดงข้อมูลเพลารถบรรทุก", 83, 208);
+  //   doc.text("ตารางแสดงข้อมูลเพลารถบรรทุก", 83, 208);
 
-    autoTable(doc, {
-      startY: 215,
+  //   autoTable(doc, {
+  //     startY: 215,
 
-      didParseCell: function (data) {
-        var cell = data.cell;
-        cell.styles.font = "Sarabun-Regular";
-      },
-      columnStyles: {
-        0: { columnWidth: 45 },
-        1: { columnWidth: 20 },
-        2: { columnWidth: 20 },
-        3: { columnWidth: 20 },
-        4: { columnWidth: 20 },
-        5: { columnWidth: 19 },
-        6: { columnWidth: 19 },
-        7: { columnWidth: 19 },
-      },
-      head: [["เพลา", "1", "2", "3", "4", "5", "6", "7"]],
-      body: [
-        [
-          "น้ําหนักเพลา (Kg)",
-          data.sum_w1,
-          data.sum_w2,
-          data.sum_w3,
-          data.sum_w4,
-          data.sum_w5,
-          data.sum_w6,
-          data.sum_w7,
-        ],
-      ],
-    });
+  //     didParseCell: function (data) {
+  //       var cell = data.cell;
+  //       cell.styles.font = "Sarabun-Regular";
+  //     },
+  //     columnStyles: {
+  //       0: { cellWidth: 45 },
+  //       1: { cellWidth: 20 },
+  //       2: { cellWidth: 20 },
+  //       3: { cellWidth: 20 },
+  //       4: { cellWidth: 20 },
+  //       5: { cellWidth: 20 },
+  //       6: { cellWidth: 19 },
+  //       7: { cellWidth: 19 },
+  //     },
+  //     head: [["เพลา", "1", "2", "3", "4", "5", "6", "7"]],
+  //     body: [
+  //       [
+  //         "น้ําหนักเพลา (Kg)",
+  //         data.sum_w1,
+  //         data.sum_w2,
+  //         data.sum_w3,
+  //         data.sum_w4,
+  //         data.sum_w5,
+  //         data.sum_w6,
+  //         data.sum_w7,
+  //       ],
+  //     ],
+  //   });
 
-    autoTable(doc, {
-      startY: 240,
-      columnStyles: {
-        0: { columnWidth: 45 },
-        1: { columnWidth: 20 },
-        2: { columnWidth: 20 },
-        3: { columnWidth: 20 },
-        4: { columnWidth: 20 },
-        5: { columnWidth: 19 },
-        6: { columnWidth: 19 },
-        7: { columnWidth: 19 },
-      },
-      didParseCell: function (data) {
-        var cell = data.cell;
-        cell.styles.font = "Sarabun-Regular";
-      },
+  //   autoTable(doc, {
+  //     startY: 240,
+  //     columnStyles: {
+  //       0: { cellWidth: 45 },
+  //       1: { cellWidth: 20 },
+  //       2: { cellWidth: 20 },
+  //       3: { cellWidth: 20 },
+  //       4: { cellWidth: 20 },
+  //       5: { cellWidth: 20 },
+  //       6: { cellWidth: 19 },
+  //       7: { cellWidth: 19 },
+  //     },
+  //     didParseCell: function (data) {
+  //       var cell = data.cell;
+  //       cell.styles.font = "Sarabun-Regular";
+  //     },
 
-      head: [["เพลา", "1", "2", "3", "4", "5", "6", "7"]],
-      body: [
-        [
-          "ระยะห่างระหว่างเพลา (cm)",
-          data.space_w1,
-          data.space_w2,
-          data.space_w3,
-          data.space_w4,
-          data.space_w5,
-          data.space_w6,
-          "-",
-        ],
-      ],
-    });
+  //     head: [["เพลา", "1", "2", "3", "4", "5", "6", "7"]],
+  //     body: [
+  //       [
+  //         "ระยะห่างระหว่างเพลา (m)",
+  //         space_w1,
+  //         space_w2,
+  //         space_w3,
+  //         space_w4,
+  //         space_w5,
+  //         space_w6,
+  //         "-",
+  //       ],
+  //     ],
+  //   });
 
-    doc.save("Report " + dateTime + ".pdf");
-  };
+  //   doc.save("Report " + dateTime + ".pdf");
+  // };
 
   const theme = createTheme({
     typography: {},
@@ -176,20 +177,51 @@ function LspViewmoreDetail({ data }) {
   const data_date = splited[1] + "/" + splited[0] + "/" + splited[2];
   const data_time = data.time.slice(0, 8);
 
-  if (data.space_w2 === "0") {
-    data.space_w2 = "-";
+  let space_w1 = (data.space_w1 * 0.1).toFixed(1);
+  let space_w2 = 0;
+  let space_w3 = 0;
+  let space_w4 = 0;
+  let space_w5 = 0;
+  let space_w6 = 0;
+  if (data.space_w2 !== "-") {
+    space_w2 = (data.space_w2 * 0.1).toFixed(1);
+    if (space_w2 < 1) {
+      space_w2 = "-";
+    }
+  } else {
+    space_w2 = "-";
   }
-  if (data.space_w3 === "0") {
-    data.space_w3 = "-";
+  if (data.space_w3 !== "-") {
+    space_w3 = (data.space_w3 * 0.1).toFixed(1);
+    if (space_w3 < 1) {
+      space_w3 = "-";
+    }
+  } else {
+    space_w3 = "-";
   }
-  if (data.space_w4 === "0") {
-    data.space_w4 = "-";
+  if (data.space_w4 !== "-") {
+    space_w4 = (data.space_w4 * 0.1).toFixed(1);
+    if (space_w4 < 1) {
+      space_w4 = "-";
+    }
+  } else {
+    space_w4 = "-";
   }
-  if (data.space_w5 === "0") {
-    data.space_w5 = "-";
+  if (data.space_w5 !== "-") {
+    space_w5 = (data.space_w5 * 0.1).toFixed(1);
+    if (space_w5 < 1) {
+      space_w5 = "-";
+    }
+  } else {
+    space_w5 = "-";
   }
-  if (data.space_w6 === "0") {
-    data.space_w6 = "-";
+  if (data.space_w6 !== "-") {
+    space_w6 = (data.space_w6 * 0.1).toFixed(1);
+    if (space_w6 < 1) {
+      space_w6 = "-";
+    }
+  } else {
+    space_w6 = "-";
   }
 
   if (data.sum_w3 === "0") {
@@ -210,10 +242,10 @@ function LspViewmoreDetail({ data }) {
   let overImg = "data:image/png;base64," + data.img_overview;
   let lprImg = "data:image/png;base64," + data.img_lpr;
 
-  let statusText = "ไม่เกินกฎหมาย";
-  if (data.gross > data.max_weight) {
-    statusText = "เกินพิกัดกฎหมาย";
-  }
+  // let statusText = "ไม่เกินกฎหมาย";
+  // if (data.gross > data.max_weight) {
+  //   statusText = "เกินพิกัดกฎหมาย";
+  // }
 
   return (
     <Section>
@@ -222,13 +254,17 @@ function LspViewmoreDetail({ data }) {
           <Container maxWidth="xl">
             <CardActions>
               <Button
-                style={{ marginTop: "10px", marginBottom: "10px" }}
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  marginRight: "10px",
+                }}
                 variant="contained"
                 href="/lowspeed"
               >
                 Back to page
               </Button>
-              <Button
+              {/* <Button
                 style={{
                   marginTop: "10px",
                   marginBottom: "10px",
@@ -239,7 +275,13 @@ function LspViewmoreDetail({ data }) {
                 onClick={generatePDF}
               >
                 Export PDF
-              </Button>
+              </Button> */}
+              <PDFdetail
+                buttonText="Export PDF"
+                variant="contained"
+                color="success"
+                data={data}
+              />
             </CardActions>
 
             <div>
@@ -387,15 +429,15 @@ function LspViewmoreDetail({ data }) {
                           <TableBody>
                             <TableRow>
                               <TableCell sx={{ backgroundColor: Color }}>
-                                ระยะห่างเพลา(cm.)
+                                ระยะห่างเพลา(m.)
                               </TableCell>
 
-                              <TableCell>{data.space_w1}</TableCell>
-                              <TableCell>{data.space_w2}</TableCell>
-                              <TableCell>{data.space_w3}</TableCell>
-                              <TableCell>{data.space_w4}</TableCell>
-                              <TableCell>{data.space_w5}</TableCell>
-                              <TableCell>{data.space_w6}</TableCell>
+                              <TableCell>{space_w1}</TableCell>
+                              <TableCell>{space_w2}</TableCell>
+                              <TableCell>{space_w3}</TableCell>
+                              <TableCell>{space_w4}</TableCell>
+                              <TableCell>{space_w5}</TableCell>
+                              <TableCell>{space_w6}</TableCell>
                               <TableCell>-</TableCell>
                             </TableRow>
                             <TableRow>

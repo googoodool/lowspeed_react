@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Typography, Container, Grid, Box } from "@mui/material";
 
-function HeaderBar({ wimType, stationName }) {
+function HeaderBar({ wimType }) {
   return (
     <Section>
       <div className="section">
@@ -16,7 +16,7 @@ function HeaderBar({ wimType, stationName }) {
               <Grid item xs={6} align="right">
                 <div className="station">
                   <Typography align="right" component={"span"}>
-                    <span>{stationName}</span>
+                    <span>สถานีตรวจสอบน้ำหนัก สิงห์บุรี</span>
                   </Typography>
                 </div>
               </Grid>

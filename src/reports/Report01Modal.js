@@ -38,14 +38,14 @@ function Report01Modal({ showModal, handleCloseModal, data, id }) {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <img
-                src={`data:image/png;base64,${data.ImageOverview}`}
+                src={`data:image/png;base64,${data.img_overview}`}
                 alt={id}
                 style={{ width: "285px", height: "150px" }}
               />
             </Grid>
             <Grid item xs={6}>
               <img
-                src={`data:image/png;base64,${data.ImageLPR}`}
+                src={`data:image/png;base64,${data.img_lpr}`}
                 alt={id}
                 style={{ width: "285px", height: "150px" }}
               />
